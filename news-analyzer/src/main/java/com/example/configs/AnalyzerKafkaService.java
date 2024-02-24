@@ -68,7 +68,10 @@ public class AnalyzerKafkaService {
     @KafkaListener(topics = "newsAnalyzerTopic", groupId = "groupId1")
     public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
 
-        var eventModel = objectMapper.readValue(event.value(), NewsModel.class);
-        System.out.println(eventModel.toString());
+        NewsModel newsModel = objectMapper.readValue(event.value(), NewsModel.class);
+
+
+
+        System.out.println(newsModel.toString());
     }
 }

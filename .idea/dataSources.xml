@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="jiring_db@localhost" uuid="d73aff74-b7d6-476b-863d-ddbbdf4915a6">
+    <data-source source="LOCAL" name="jiring_db@localhost" uuid="15ab45a1-6e2d-473b-ae2e-a472071be203">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>Jdbc:mysql://localhost:3306/jiring_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="jiring-task (1)/Hibernate" uuid="dbf925f0-7d1d-4f5e-b51a-a3828f80cd33">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/jiring_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="jiring-task/Hibernate" uuid="07e6ac27-8f94-488f-9e7b-4eaf47efdd8d">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/jiring_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>

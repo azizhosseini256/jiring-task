@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mock-news-feed/mock-news-feed.iml" filepath="$PROJECT_DIR$/mock-news-feed/mock-news-feed.iml" />
-      <module fileurl="file://$PROJECT_DIR$/news-analyzer/news-analyzer.iml" filepath="$PROJECT_DIR$/news-analyzer/news-analyzer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/news-analyzer/jiring-task.iml" filepath="$PROJECT_DIR$/news-analyzer/jiring-task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mock-news-feed/jiring-task (1).iml" filepath="$PROJECT_DIR$/mock-news-feed/jiring-task (1).iml" />
     </modules>
   </component>
 </project>
