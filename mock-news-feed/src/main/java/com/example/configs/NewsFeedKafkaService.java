@@ -53,6 +53,7 @@ public class NewsFeedKafkaService {
         return new DefaultKafkaProducerFactory<>(config);
     }
 
+
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
@@ -62,14 +63,14 @@ public class NewsFeedKafkaService {
         kafkaTemplate().send(newsAnalyzerTopic,object);
     }
 
-    public void sendDataToNewsAnalyzerTopic(Object[] objects){
-        kafkaTemplate().send(newsAnalyzerTopic,objects);
+    @KafkaListener(topics = "mockNewsFeedTopic", groupId = "groupId1")
+    public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
+
+        Object news = objectMapper.readValue(event.value(), Object.class);
+
+        if (news !=null) {
+            System.out.println(news.toString());
+        }
     }
 
-    @KafkaListener(topics = "mockNewsfeedTopic", groupId = "groupId1")
-    public void recive(ConsumerRecord<String, String> event) throws JsonProcessingException {
-
-        var eventModel = objectMapper.readValue(event.value(), NewsModel.class);
-        System.out.println(eventModel.getText());
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.configs;
 
+import com.example.model.FrequencyModel;
 import com.example.model.NewsModel;
 import com.example.service.NewsAnalyzer;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -57,21 +58,27 @@ public class AnalyzerKafkaService {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    public void sendDataToNewsAnalyzerTopic(Object object){
+    public void sendToMockNewsFeedTopic(Object object){
         kafkaTemplate().send(mockNewsFeedTopic,object);
-    }
-
-    public void sendDataToNewsAnalyzerTopic(Object[] objects){
-        kafkaTemplate().send(mockNewsFeedTopic,objects);
     }
 
     @KafkaListener(topics = "newsAnalyzerTopic", groupId = "groupId1")
     public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
 
-        NewsModel newsModel = objectMapper.readValue(event.value(), NewsModel.class);
+        NewsModel news = objectMapper.readValue(event.value(), NewsModel.class);
+        sendToMockNewsFeedTopic(news.toString());
 
-
-
-        System.out.println(newsModel.toString());
     }
+
+    private FrequencyModel getFrequency() {
+        return FrequencyModel.builder()
+                .Enable(true)
+                .PriorityTarget(4)
+                .PriorityDistance(1)
+                .SendJustGoodNews(true)
+                .SendJustBadNews(null)
+                .SendUniqueTitle(null)
+                .build();
+    }
+
 }

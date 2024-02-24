@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class LoggingModel {
 
     private String text;
+    private FrequencyModel frq;
 
 }
