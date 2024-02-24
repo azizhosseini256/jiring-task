@@ -59,6 +59,7 @@ public class AnalyzerKafkaService {
     }
 
     public void sendToMockNewsFeedTopic(Object object){
+        if (object != null)
         kafkaTemplate().send(mockNewsFeedTopic,object);
     }
 
@@ -66,6 +67,10 @@ public class AnalyzerKafkaService {
     public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
 
         NewsModel news = objectMapper.readValue(event.value(), NewsModel.class);
+
+        news= newsAnalyzer.filterNewsByFrequency(news,getFrequency());
+
+        if (news != null)
         sendToMockNewsFeedTopic(news.toString());
 
     }
@@ -75,7 +80,7 @@ public class AnalyzerKafkaService {
                 .Enable(true)
                 .PriorityTarget(4)
                 .PriorityDistance(1)
-                .SendJustGoodNews(true)
+                .SendJustGoodNews(null)
                 .SendJustBadNews(null)
                 .SendUniqueTitle(null)
                 .build();

@@ -31,9 +31,6 @@ public class NewsFeedKafkaService {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-//    @Autowired
-//    private KafkaTemplate<String, Object> kafkaTemplate;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -60,6 +57,7 @@ public class NewsFeedKafkaService {
     }
 
     public void sendDataToNewsAnalyzerTopic(Object object){
+        if (object != null)
         kafkaTemplate().send(newsAnalyzerTopic,object);
     }
 

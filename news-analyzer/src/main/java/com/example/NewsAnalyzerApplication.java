@@ -22,7 +22,7 @@ public class NewsAnalyzerApplication {
     @Bean
     CommandLineRunner run(AnalyzerKafkaService analyzerKafkaService) {
         return args -> {
-            while (true) analyzerKafkaService.sendToMockNewsFeedTopic("This is kafka");
+//            while (true) analyzerKafkaService.sendToMockNewsFeedTopic("This is kafka");
         };
     }
 }
