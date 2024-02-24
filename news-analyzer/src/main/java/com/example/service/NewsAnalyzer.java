@@ -55,30 +55,30 @@ public class NewsAnalyzer {
 
     public NewsModel filterNewsByFrequency(NewsModel news, FrequencyModel frq) {
 
-        if (!frq.isEnable()) return news;
+        if (!frq.isEnable() || frq == null) return news;
         validateFrequency(frq);
 
         if ((frq.getPriorityTarget()!=null)
                 && Math.abs(news.getPriority() - frq.getPriorityTarget()) > frq.getPriorityDistance()) {
-//            System.out.println("Filtered Range");
+            System.err.println("Filtered: Range");
             return null;
         }
 
         if (frq.getSendUniqueTitle() != null
                 && isUniqueTitle(news.getTitle()) != frq.getSendUniqueTitle()) {
-//            System.out.println("Filtered Unique");
+            System.err.println("Filtered: Unique");
             return null;
         }
 
         if (frq.getSendJustGoodNews() != null
                 && isGoodNews(news.getTitle()) != frq.getSendJustGoodNews()) {
-//            System.out.println("Filtered Good");
+            System.err.println("Filtered: Good");
             return null;
         }
 
         if (frq.getSendJustBadNews() != null
                 && isBadNews(news.getTitle()) != frq.getSendJustBadNews()) {
-//            System.out.println("Filtered Bad");
+            System.err.println("Filtered: Bad");
             return null;
         }
 

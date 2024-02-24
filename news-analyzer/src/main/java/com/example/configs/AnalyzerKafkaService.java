@@ -18,6 +18,7 @@ import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,11 +68,9 @@ public class AnalyzerKafkaService {
     public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
 
         NewsModel news = objectMapper.readValue(event.value(), NewsModel.class);
-
         news= newsAnalyzer.filterNewsByFrequency(news,getFrequency());
+        if (news != null) sendToMockNewsFeedTopic(news.toString());
 
-        if (news != null)
-        sendToMockNewsFeedTopic(news.toString());
 
     }
 
@@ -80,9 +79,9 @@ public class AnalyzerKafkaService {
                 .Enable(true)
                 .PriorityTarget(4)
                 .PriorityDistance(1)
-                .SendJustGoodNews(null)
+                .SendJustGoodNews(true)
                 .SendJustBadNews(null)
-                .SendUniqueTitle(null)
+                .SendUniqueTitle(true)
                 .build();
     }
 
