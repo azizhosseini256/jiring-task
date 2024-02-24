@@ -1,5 +1,7 @@
 package com.example.model;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +18,5 @@ public class FrequencyModel {
     private Integer PriorityDistance;
     private Boolean SendJustGoodNews;
     private Boolean SendJustBadNews;
-    private Boolean SendUniqueTitle;
 
 }

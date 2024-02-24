@@ -1,7 +1,6 @@
 package com.example;
 
 import com.example.configs.NewsFeedKafkaService;
-import com.example.service.NewsGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +15,6 @@ public class MockNewsFeedApplication {
         SpringApplication.run(MockNewsFeedApplication.class, args);
     }
 
-
     @Bean
     Random random() {
         return new Random();
@@ -29,10 +27,10 @@ public class MockNewsFeedApplication {
 
 
     @Bean
-    CommandLineRunner run(NewsFeedKafkaService newsFeedKafkaService, NewsGenerator newsGenerator) {
+    CommandLineRunner run(NewsFeedKafkaService newsFeedKafkaService) {
         return args -> {
 
-            while (true) newsFeedKafkaService.sendDataToNewsAnalyzerTopic(newsGenerator.randomNewsGenerator());
+            newsFeedKafkaService.startBroadcastingMockNews();
 
         };
     }

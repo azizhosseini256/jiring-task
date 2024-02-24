@@ -1,8 +1,6 @@
 package com.example.configs;
 
-import com.example.model.NewsModel;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.service.NewsMockGeneratorService;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -32,7 +30,7 @@ public class NewsFeedKafkaService {
     private String bootstrapServers;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private NewsMockGeneratorService newsMockGeneratorService;
 
     @Bean
     public NewTopic topic (){
@@ -50,25 +48,23 @@ public class NewsFeedKafkaService {
         return new DefaultKafkaProducerFactory<>(config);
     }
 
-
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    public void sendDataToNewsAnalyzerTopic(Object object){
+    private void sendDataToNewsAnalyzer(Object object){
         if (object != null)
         kafkaTemplate().send(newsAnalyzerTopic,object);
     }
 
     @KafkaListener(topics = "mockNewsFeedTopic", groupId = "groupId1")
-    public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
+    public void receiveNewsFromAnalyzer(ConsumerRecord<String, String> news)  {
+        System.out.println(news.value());
+    }
 
-        Object news = objectMapper.readValue(event.value(), Object.class);
-
-        if (news !=null) {
-            System.out.println(news.toString());
-        }
+    public void startBroadcastingMockNews(){
+        while (true) sendDataToNewsAnalyzer(newsMockGeneratorService.randomNewsGenerator());
     }
 
 }

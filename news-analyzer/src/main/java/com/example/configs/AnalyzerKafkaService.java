@@ -2,6 +2,7 @@ package com.example.configs;
 
 import com.example.model.FrequencyModel;
 import com.example.model.NewsModel;
+import com.example.service.FilterService;
 import com.example.service.NewsAnalyzer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,9 @@ public class AnalyzerKafkaService {
     @Autowired
     private NewsAnalyzer newsAnalyzer;
 
+    @Autowired
+    private FilterService filterService;
+
     @Bean
     public NewTopic topic (){
         return TopicBuilder.name(mockNewsFeedTopic).build();
@@ -68,7 +72,10 @@ public class AnalyzerKafkaService {
     public void receive(ConsumerRecord<String, String> event) throws JsonProcessingException {
 
         NewsModel news = objectMapper.readValue(event.value(), NewsModel.class);
-        news= newsAnalyzer.filterNewsByFrequency(news,getFrequency());
+
+
+        news= filterService.filterNewsByFrequency(news,getFrequency());
+
         if (news != null) sendToMockNewsFeedTopic(news.toString());
 
 
@@ -77,11 +84,11 @@ public class AnalyzerKafkaService {
     private FrequencyModel getFrequency() {
         return FrequencyModel.builder()
                 .Enable(true)
-                .PriorityTarget(4)
+                .PriorityTarget(8)
                 .PriorityDistance(1)
-                .SendJustGoodNews(true)
+                .SendJustGoodNews(null)
                 .SendJustBadNews(null)
-                .SendUniqueTitle(true)
+//                .SendUniqueTitle(null)
                 .build();
     }
 

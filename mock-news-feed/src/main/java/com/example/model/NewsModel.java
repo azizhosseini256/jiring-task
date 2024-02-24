@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,5 @@ public class NewsModel {
     private String text;
     private Date createdDate;
     private String title;
-    private boolean isGoodNews;
-    private boolean isUniqueNews;
 
 }

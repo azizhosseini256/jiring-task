@@ -44,29 +44,18 @@ public class NewsAnalyzer {
         return ((double) sentenceBadWords.size() / sentenceWords.length) > 0.5;
     }
 
-    private boolean isUniqueTitle(String title) {
-        List<String> sentenceWords = Arrays.stream(title.split(" ")).toList();
-        return sentenceWords.containsAll(goodWords) || sentenceWords.containsAll(badWords);
-    }
-
     private boolean isUniqueNews(NewsModel news){
-        return isUniqueTitle(news.getTitle()) && isGoodNews(news.getTitle()) && news.getPriority() > 6;
+        return isGoodNews(news.getTitle()) && news.getPriority() > 6;
     }
 
     public NewsModel filterNewsByFrequency(NewsModel news, FrequencyModel frq) {
 
-        if (!frq.isEnable() || frq == null) return news;
-        validateFrequency(frq);
+        if (frq == null || !frq.isEnable()) return news;
+        validationFrequency(frq);
 
         if ((frq.getPriorityTarget()!=null)
                 && Math.abs(news.getPriority() - frq.getPriorityTarget()) > frq.getPriorityDistance()) {
             System.err.println("Filtered: Range");
-            return null;
-        }
-
-        if (frq.getSendUniqueTitle() != null
-                && isUniqueTitle(news.getTitle()) != frq.getSendUniqueTitle()) {
-            System.err.println("Filtered: Unique");
             return null;
         }
 
@@ -82,10 +71,13 @@ public class NewsAnalyzer {
             return null;
         }
 
+        news.setGoodNews(isGoodNews(news.getTitle()));
+        news.setUniqueNews(isUniqueNews(news));
         return news;
     }
 
-    private void validateFrequency(FrequencyModel frq){
+    //todo to bean validation
+    private void validationFrequency(FrequencyModel frq){
         if (
                 frq.getSendJustGoodNews() != null
                         && frq.getSendJustBadNews() != null
