@@ -1,0 +1,18 @@
+server:
+  port: 8083
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+  datasource:
+    url: jdbc:mysql://localhost:3306/jiring_db
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: news
+    password: 123654
+  jpa:
+    properties:
+      hibernate:
+        dialec: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop

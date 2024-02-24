@@ -1,0 +1,3 @@
+# Project exclude paths
+/mock-news-feed/target/
+/news-analyzer/target/
