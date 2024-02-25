@@ -1,9 +1,7 @@
 package com.example.configs;
 
 import com.example.model.FrequencyModel;
-import com.example.model.LoggingModel;
 import com.example.model.NewsModel;
-import com.example.repository.NewsDao;
 import com.example.service.NewsAnalyzeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,11 +18,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -39,6 +34,12 @@ public class AnalyzerKafkaConfiguration {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private NewsAnalyzeService newsAnalyzeService;
+
+    @Autowired
+    private FrequencyModel frq;
 
     @Bean
     public NewTopic topic() {
@@ -73,48 +74,19 @@ public class AnalyzerKafkaConfiguration {
         kafkaTemplate().send(otherTopic, eventObject);
     }
 
+    //Receive Mock News
     ///////////////////////////////////////////////////////////////////////////
-
-    //KafkaListener Sahih Object
     @KafkaListener(topics = "newsAnalyzerTopic", groupId = "groupId1")
-    public void AnalyzerConsumer(ConsumerRecord<String, String> news) throws JsonProcessingException {
+    public void AnalyzerConsumer(ConsumerRecord<String, String> newsEvent) throws JsonProcessingException {
 
-        NewsModel newsModel = objectMapper.readValue(news.value(), NewsModel.class);
+        NewsModel newsModel = objectMapper.readValue(newsEvent.value(), NewsModel.class);
 
-        NewsModel filteredNewsModel = newsAnalyzeService.filterAndManagementNewsByFrequency(newsModel,frq);
-        if (filteredNewsModel !=null) sendData(filteredNewsModel);
+        //filter mock news or save to database
+        NewsModel analyzedNewsModel = newsAnalyzeService.filterMockNewsByFrequencyOrSave(newsModel,frq);
 
-    }
+        //send result to feed service
+        if (analyzedNewsModel !=null) sendData(analyzedNewsModel);
 
-    ///////////////////////////////////////////////////////////////////////////
-
-    @Autowired
-    private NewsDao newsDao;
-
-    @Autowired
-    private NewsAnalyzeService newsAnalyzeService;
-
-    @Autowired
-    private FrequencyModel frq;
-
-    @Autowired
-    @Scheduled(fixedRate = 10000)
-    public String sendFilteringLogToConsole(){
-        return logging();
-    }
-
-    public String logging(){
-
-        LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);
-
-        int goodNewsInLast10Sec = newsDao.goodNewsInLast10Sec(tenSecondsAgo);
-        List<String> unique3TitlesInLast10Sec = newsDao.unique3TitlesInLast10Sec(tenSecondsAgo);
-
-        LoggingModel log = new LoggingModel();
-        log.setGoodNewsInLast10Sec(goodNewsInLast10Sec);
-        log.setUnique3TitlesInLast10Sec(unique3TitlesInLast10Sec);
-        System.err.println(log.toString());
-        return log.toString();
     }
 
 }

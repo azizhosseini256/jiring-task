@@ -12,7 +12,7 @@ public class NewsModel {
 
     private int priority;
     private String text;
-    private String title;
     private String createdDate;
+    private String title;
 
 }

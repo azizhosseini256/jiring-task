@@ -71,24 +71,23 @@ public class NewsKafkaConfiguration {
         kafkaTemplate().send(otherTopic, eventObject);
     }
 
+    //SEND
+    //Send Mock News
     ///////////////////////////////////////////////////////////////////////////
-
-    //KafkaListener Sahih Object
-    @KafkaListener(topics = "mockNewsFeedTopic", groupId = "groupId1")
-    public void AnalyzerConsumer(ConsumerRecord<String, String> news) throws JsonProcessingException {
-
-        NewsModel newsModel = objectMapper.readValue(news.value(), NewsModel.class);
-
-        System.out.println(newsModel.toString());
-
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-
 
     public void startBroadcastingMockNews() {
         while (true) sendData(mockNewsGeneratorService.getMockNews());
     }
 
+    //RECEIVE
+    //Receive analyzed news
+    ///////////////////////////////////////////////////////////////////////////
+    @KafkaListener(topics = "mockNewsFeedTopic", groupId = "groupId1")
+    public void AnalyzerConsumer(ConsumerRecord<String, String> newsEvent) throws JsonProcessingException {
+
+        NewsModel analyzedNewsModel = objectMapper.readValue(newsEvent.value(), NewsModel.class);
+        System.out.println(analyzedNewsModel.toString());
+
+    }
 
 }

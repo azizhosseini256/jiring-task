@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.configs.AnalyzerKafkaConfiguration;
 import com.example.model.FrequencyModel;
 import com.example.service.NewsAnalyzeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,18 +23,18 @@ public class NewsAnalyzerApplication {
     @Bean
     public FrequencyModel frq() {
         return FrequencyModel.builder()
-                .Enable(true)
-                .PriorityTarget(8)
-                .PriorityDistance(1)
-                .SendJustBadNews(true)
-                .SendJustBadNews(null)
+                .enabled(true)
+                .priorityTarget(8)
+                .priorityDistance(1)
+                .sendJustBadNews(true)
+                .sendJustBadNews(null)
                 .build();
     }
 
     @Bean
-    CommandLineRunner run(AnalyzerKafkaConfiguration analyzerKafkaConfiguration) {
+    CommandLineRunner run(NewsAnalyzeService newsAnalyzeService) {
         return args -> {
-            analyzerKafkaConfiguration.logging();
+            newsAnalyzeService.GetAnalyzeResultLog();
         };
     }
 }

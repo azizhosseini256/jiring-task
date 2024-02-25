@@ -5,6 +5,7 @@ import com.example.model.FrequencyModel;
 import com.example.model.LoggingModel;
 import com.example.model.NewsModel;
 import com.example.repository.NewsDao;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -82,9 +83,10 @@ public class NewsAnalyzeService {
             throw new RuntimeException("Exception: EITHER SET BOTH OR BOTH ARE NULL");
     }
 
-    public NewsModel filterAndManagementNewsByFrequency(NewsModel news, FrequencyModel frq) {
+    //todo fix dont return null
+    public NewsModel filterMockNewsByFrequencyOrSave(NewsModel news, FrequencyModel frq) {
 
-        if (frq == null || !frq.isEnable()) return news;
+        if (frq == null || !frq.isEnabled()) return news;
         validationFrequency(frq);
 
 
@@ -110,8 +112,30 @@ public class NewsAnalyzeService {
         newsEntity.setGoodNews(isGoodNews(news.getTitle()));
         newsEntity.setUniqueNews(isUniqueNews(news));
         newsEntity.setCreatedDate(LocalDateTime.now());
+
         newsDao.save(newsEntity);
         return news;
+    }
+
+    @Autowired
+    @Scheduled(fixedRate = 10000)
+    public LoggingModel LoggingToConsole(){
+        return GetAnalyzeResultLog();
+    }
+
+    public LoggingModel GetAnalyzeResultLog(){
+
+        LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);
+
+        int goodNewsInLast10Sec = newsDao.goodNewsInLast10Sec(tenSecondsAgo);
+        List<String> unique3TitlesInLast10Sec = newsDao.unique3TitlesInLast10Sec(tenSecondsAgo);
+
+        LoggingModel log = new LoggingModel();
+        log.setGoodNewsInLast10Sec(goodNewsInLast10Sec);
+        log.setUnique3TitlesInLast10Sec(unique3TitlesInLast10Sec);
+
+        System.err.println(log.toString());
+        return log;
     }
 
 }
