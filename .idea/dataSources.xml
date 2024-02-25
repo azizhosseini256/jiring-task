@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="jiring_db@localhost" uuid="15ab45a1-6e2d-473b-ae2e-a472071be203">
+    <data-source source="LOCAL" name="jiring_db@localhost" uuid="d832e090-489b-4fdb-be77-5d9a3aee880f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>Jdbc:mysql://localhost:3306/jiring_db</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/jiring_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

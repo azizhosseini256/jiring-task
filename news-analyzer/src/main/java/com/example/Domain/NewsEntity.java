@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -33,12 +34,13 @@ public class NewsEntity implements Serializable {
     @Column (name = "text")
     private String text;
 
+    @Column (name = "created_date")
+    private LocalDateTime createdDate;
+
     @Column (name = "is_good_news")
     private boolean isGoodNews;
 
     @Column (name = "is_unique_news")
     private boolean isUniqueNews;
 
-    @Column (name = "created_date")
-    private Date createdDate;
 }

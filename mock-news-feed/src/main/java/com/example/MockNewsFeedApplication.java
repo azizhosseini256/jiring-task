@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.configs.NewsFeedKafkaService;
+import com.example.configs.NewsKafkaConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,11 +26,13 @@ public class MockNewsFeedApplication {
     }
 
 
+
+
     @Bean
-    CommandLineRunner run(NewsFeedKafkaService newsFeedKafkaService) {
+    CommandLineRunner run(NewsKafkaConfiguration newsKafkaConfiguration) {
         return args -> {
 
-            newsFeedKafkaService.startBroadcastingMockNews();
+            newsKafkaConfiguration.startBroadcastingMockNews();
 
         };
     }

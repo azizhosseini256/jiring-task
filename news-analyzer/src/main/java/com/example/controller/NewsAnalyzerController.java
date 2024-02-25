@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.configs.AnalyzerKafkaService;
+import com.example.configs.AnalyzerKafkaConfiguration;
 import com.example.model.FrequencyModel;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NewsAnalyzerController {
 
     @Autowired
-    private AnalyzerKafkaService analyzerKafkaService;
+    private AnalyzerKafkaConfiguration analyzerKafkaConfiguration;
 
     @PutMapping("/get-frq")
     public ResponseEntity<Void> getFrq(@RequestBody @Valid FrequencyModel frequencyModel){

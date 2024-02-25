@@ -13,11 +13,7 @@ import java.util.List;
 @Component
 public class LoggingModel {
 
-//    private FrequencyModel frq;
-    private int rangeFiltered;
-    private int goodNewsFiltered;
-    private int badNewsFiltered;
-    private int goodNewsOn10Sec;
-    private List<String> unique3TitlesOn10Sec;
+    private int goodNewsInLast10Sec;
+    private List<String> unique3TitlesInLast10Sec;
 
 }

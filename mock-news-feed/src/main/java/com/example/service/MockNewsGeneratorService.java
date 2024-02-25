@@ -4,11 +4,14 @@ import com.example.model.NewsModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class NewsMockGeneratorService {
+public class MockNewsGeneratorService {
 
     @Autowired
     private Random random;
@@ -35,12 +38,12 @@ public class NewsMockGeneratorService {
 
     }
 
-    public NewsModel randomNewsGenerator() {
+    public NewsModel getMockNews() {
         NewsModel news = new NewsModel();
         news.setPriority(randomPriorityGenerator());
         news.setTitle(randomTitleGenerator());
         news.setText(UUID.randomUUID().toString());
-        news.setCreatedDate(new Date());
+//        news.setCreatedDate(LocalDateTime.now());
         return news;
     }
 
