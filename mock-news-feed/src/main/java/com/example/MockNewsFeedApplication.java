@@ -25,9 +25,6 @@ public class MockNewsFeedApplication {
         return new ObjectMapper();
     }
 
-
-
-
     @Bean
     CommandLineRunner run(NewsKafkaConfiguration newsKafkaConfiguration) {
         return args -> {

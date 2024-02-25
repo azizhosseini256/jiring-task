@@ -114,26 +114,4 @@ public class NewsAnalyzeService {
         return news;
     }
 
-    @Autowired
-    @Scheduled(fixedRate = 10000)
-    public String sendFilteringLogToConsole(){
-        return loggingWanted();
-    }
-
-    public String loggingWanted(){
-
-        LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);
-
-        int goodNewsInLast10Sec = newsDao.goodNewsInLast10Sec(tenSecondsAgo);
-        List<String> unique3TitlesInLast10Sec = newsDao.unique3TitlesInLast10Sec(tenSecondsAgo);
-
-        LoggingModel log = new LoggingModel();
-        log.setGoodNewsInLast10Sec(goodNewsInLast10Sec);
-        log.setUnique3TitlesInLast10Sec(unique3TitlesInLast10Sec);
-        System.err.println(log.toString());
-
-        return log.toString();
-    }
-
-
 }

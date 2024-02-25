@@ -43,7 +43,7 @@ public class MockNewsGeneratorService {
         news.setPriority(randomPriorityGenerator());
         news.setTitle(randomTitleGenerator());
         news.setText(UUID.randomUUID().toString());
-//        news.setCreatedDate(LocalDateTime.now());
+        news.setCreatedDate(LocalDateTime.now().toString());
         return news;
     }
 

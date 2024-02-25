@@ -17,7 +17,7 @@ public class NewsAnalyzerApplication {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
+    public ObjectMapper objectMapper(){
         return new ObjectMapper();
     }
 
@@ -33,9 +33,9 @@ public class NewsAnalyzerApplication {
     }
 
     @Bean
-    CommandLineRunner run(AnalyzerKafkaConfiguration analyzerKafkaConfiguration, NewsAnalyzeService newsAnalyzeService) {
+    CommandLineRunner run(AnalyzerKafkaConfiguration analyzerKafkaConfiguration) {
         return args -> {
-            newsAnalyzeService.loggingWanted();
+            analyzerKafkaConfiguration.logging();
         };
     }
 }
