@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class NewsFeedKafkaConfiguration {
+public class NewsFeedKafkaConnection {
 
     @Value("${topic.newsAnalyzerTopic}")
     private String newsAnalyzerTopic;
@@ -88,7 +88,7 @@ public class NewsFeedKafkaConfiguration {
 
     }
 
-    //Receive and log analyzed news from News Analyzer service.
+    //Receive and logging analyzed news from News Analyzer service.
     @SneakyThrows(value = {JsonProcessingException.class})
     @KafkaListener(topics = "mockNewsFeedTopic", groupId = "groupId1")
     public void AnalyzerConsumer(ConsumerRecord<String, String> newsEvent) {

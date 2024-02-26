@@ -24,16 +24,21 @@ public class NewsAnalyzerApplication {
 
     }
 
-    //Sample Frequency as bean. you can change it.
+    //Sample "Frequency" (Filtering model) for analyzing as a Bean.
+    //you can change it or get a new from rest-api controller.
     @Bean
     public FrequencyModel frq() {
 
         return FrequencyModel.builder()
+
                 .enabled(true)
+
                 .priorityTarget(8)
                 .priorityDistance(1)
-                .sendJustBadNews(true)
+
+                .sendJustGoodNews(true)
                 .sendJustBadNews(null)
+
                 .build();
 
     }
@@ -42,7 +47,7 @@ public class NewsAnalyzerApplication {
     CommandLineRunner run(NewsAnalyzerService newsAnalyzerService) {
         return args -> {
 
-            newsAnalyzerService.getAnalyzeResultLog();
+            newsAnalyzerService.getAnalyzeLog();
 
         };
     }

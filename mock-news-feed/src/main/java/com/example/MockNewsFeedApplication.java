@@ -1,6 +1,6 @@
 package com.example;
 
-import com.example.configs.NewsFeedKafkaConfiguration;
+import com.example.configs.NewsFeedKafkaConnection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,20 +18,24 @@ public class MockNewsFeedApplication {
     }
 
     @Bean
-    Random random() {
+    public Random random() {
+
         return new Random();
+
     }
 
     @Bean
     public ObjectMapper objectMapper(){
+
         return new ObjectMapper();
+
     }
 
     @Bean
-    CommandLineRunner run(NewsFeedKafkaConfiguration newsFeedKafkaConfiguration) {
+    CommandLineRunner run(NewsFeedKafkaConnection newsFeedKafkaConnection) {
         return args -> {
 
-            newsFeedKafkaConfiguration.startBroadcastingMockNews();
+            newsFeedKafkaConnection.startBroadcastingMockNews();
 
         };
     }

@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Configuration
 @Service
-public class AnalyzerKafkaConfiguration {
+public class AnalyzerKafkaConnection {
 
     @Value("${topic.mockNewsFeedTopic}")
     private String mockNewsFeedTopic;
@@ -91,11 +91,10 @@ public class AnalyzerKafkaConfiguration {
 
         NewsModel newsModel = objectMapper.readValue(newsEvent.value(), NewsModel.class);
 
-        //Analyze.
-        //Ignore mock news or save it to database.
+        //Ignore received mock news or save it to database.
         NewsModel analyzedNewsModel = newsAnalyzerService.saveOrIgnoreMockNewsByFrequency(newsModel,frq);
 
-        //Send results to Mock News Feed service.
+        //Send analyzed results to News Feed service.
         //todo fix it null
         if (analyzedNewsModel !=null) sendData(analyzedNewsModel);
 

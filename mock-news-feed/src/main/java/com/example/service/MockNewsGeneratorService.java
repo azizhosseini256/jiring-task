@@ -17,7 +17,7 @@ public class MockNewsGeneratorService {
     @Value("${words.allWords}")
     private List<String> allWords;
 
-    //Random int int range 3~5
+    //Random int in range 3~5
     private int randomTitleLengthGenerator() {
 
         return random.nextInt(3) + 3;

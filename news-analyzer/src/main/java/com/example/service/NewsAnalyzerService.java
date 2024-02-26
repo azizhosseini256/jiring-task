@@ -117,7 +117,8 @@ public class NewsAnalyzerService {
         return news;
     }
 
-    public LoggingModel getAnalyzeResultLog(){
+    //Getting data from database.
+    public LoggingModel getAnalyzeLog(){
 
         LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);
 
@@ -128,15 +129,15 @@ public class NewsAnalyzerService {
         log.setCountGoodNewsInLast10Sec(goodNewsInLast10Sec);
         log.setTitleOf3UniqueNewsInLast10Sec(unique3TitlesInLast10Sec);
 
-        System.err.println(log.toString());
+        System.out.println(log.toString());
         return log;
     }
 
-    @Autowired
+    //Run above method every 10 sec.
     @Scheduled(fixedRate = 10000)
     public LoggingModel LoggingToConsole(){
 
-        return getAnalyzeResultLog();
+        return getAnalyzeLog();
 
     }
 
