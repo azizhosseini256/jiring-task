@@ -5,7 +5,6 @@ import com.example.model.NewsModel;
 import com.example.service.NewsAnalyzerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -22,6 +21,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.SneakyThrows;
 
 @Configuration
 @Service
@@ -95,7 +95,6 @@ public class AnalyzerKafkaConnection {
         NewsModel analyzedNewsModel = newsAnalyzerService.saveOrIgnoreMockNewsByFrequency(newsModel,frq);
 
         //Send analyzed results to News Feed service.
-        //todo fix it null
         if (analyzedNewsModel !=null) sendData(analyzedNewsModel);
 
     }

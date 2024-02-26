@@ -61,7 +61,7 @@ public class NewsAnalyzerService {
 
     }
 
-    //todo to bean validation
+    //You can use it as Bean Validation or Exception handling.
     private void validationFrequency(FrequencyModel frq){
 
         if ((frq.getPriorityTarget() <0 && frq.getPriorityTarget() >9)
@@ -82,7 +82,7 @@ public class NewsAnalyzerService {
             throw new RuntimeException("Exception: EITHER SET BOTH OR BOTH ARE NULL");
     }
 
-    //todo fix dont return null
+
     public NewsModel saveOrIgnoreMockNewsByFrequency(NewsModel news, FrequencyModel frq) {
 
         if (frq == null || !frq.isEnabled()) return news;
@@ -117,7 +117,7 @@ public class NewsAnalyzerService {
         return news;
     }
 
-    //Getting data from database.
+    //Get data from database for create analyze log.
     public LoggingModel getAnalyzeLog(){
 
         LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);

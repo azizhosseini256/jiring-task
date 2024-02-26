@@ -24,7 +24,7 @@ public class NewsAnalyzerApplication {
 
     }
 
-    //Sample "Frequency" (Filtering model) for analyzing as a Bean.
+    //Sample "Frequency" (Filtering model) as a Bean.
     //you can change it or get a new from rest-api controller.
     @Bean
     public FrequencyModel frq() {

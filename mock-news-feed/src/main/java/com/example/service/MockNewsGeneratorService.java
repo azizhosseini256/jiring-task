@@ -25,12 +25,13 @@ public class MockNewsGeneratorService {
     }
 
     //Random int in range 0~9 with more chance for upper numbers.
-    //If number is in second half of the range, shade it sometimes!
+    //If number was in second half of the range, shade it sometimes!
     private int randomPriorityGenerator() {
         int randomNumber = random.nextInt(10);
         return (randomNumber > 4 && random.nextBoolean()) ? randomNumber - 4 : randomNumber;
     }
 
+    //Random title, random 3~5 length and random word selection from allWords.
     //IntStream ints(long streamSize, int randomNumberOrigin, int randomNumberBound)
     private String randomTitleGenerator() {
 
