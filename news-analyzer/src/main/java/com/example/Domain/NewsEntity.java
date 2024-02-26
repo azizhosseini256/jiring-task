@@ -4,17 +4,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "jiring_db",name = "news_tb")
+@Table(schema = "jiring_db", name = "news_tb")
 public class NewsEntity implements Serializable {
 
     @Serial

@@ -14,7 +14,7 @@ public interface NewsDao extends JpaRepository<NewsEntity,Long> {
     @Query(value = "SELECT COUNT(*) AS record_count FROM news_tb WHERE created_date >= :tenSecondsAgo", nativeQuery = true)
     int goodNewsInLast10Sec(@Param("tenSecondsAgo") LocalDateTime tenSecondsAgo);
 
-    @Query(value = "SELECT n.title FROM news_tb n WHERE n.created_date >= :tenSecondsAgo order by created_date limit 3" , nativeQuery = true)
+    @Query(value = "SELECT n.title FROM news_tb n WHERE n.created_date >= :tenSecondsAgo and n.is_unique_news =true order by created_date limit 3" , nativeQuery = true)
     List<String> unique3TitlesInLast10Sec (@Param("tenSecondsAgo") LocalDateTime tenSecondsAgo);
 
 }

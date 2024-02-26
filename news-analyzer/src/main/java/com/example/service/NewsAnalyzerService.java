@@ -5,22 +5,19 @@ import com.example.model.FrequencyModel;
 import com.example.model.LoggingModel;
 import com.example.model.NewsModel;
 import com.example.repository.NewsDao;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 @EnableScheduling
-public class NewsAnalyzeService {
+public class NewsAnalyzerService {
 
-    //TODO celestial!
     @Value("${words.goodWords}")
     private List<String> goodWords;
 
@@ -59,7 +56,9 @@ public class NewsAnalyzeService {
     }
 
     private boolean isUniqueNews(NewsModel news){
+
         return isGoodNews(news.getTitle()) && news.getPriority() > 6;
+
     }
 
     //todo to bean validation
@@ -84,7 +83,7 @@ public class NewsAnalyzeService {
     }
 
     //todo fix dont return null
-    public NewsModel filterMockNewsByFrequencyOrSave(NewsModel news, FrequencyModel frq) {
+    public NewsModel saveOrIgnoreMockNewsByFrequency(NewsModel news, FrequencyModel frq) {
 
         if (frq == null || !frq.isEnabled()) return news;
         validationFrequency(frq);
@@ -114,16 +113,11 @@ public class NewsAnalyzeService {
         newsEntity.setCreatedDate(LocalDateTime.now());
 
         newsDao.save(newsEntity);
+
         return news;
     }
 
-    @Autowired
-    @Scheduled(fixedRate = 10000)
-    public LoggingModel LoggingToConsole(){
-        return GetAnalyzeResultLog();
-    }
-
-    public LoggingModel GetAnalyzeResultLog(){
+    public LoggingModel getAnalyzeResultLog(){
 
         LocalDateTime tenSecondsAgo = LocalDateTime.now().minusSeconds(10);
 
@@ -131,11 +125,19 @@ public class NewsAnalyzeService {
         List<String> unique3TitlesInLast10Sec = newsDao.unique3TitlesInLast10Sec(tenSecondsAgo);
 
         LoggingModel log = new LoggingModel();
-        log.setGoodNewsInLast10Sec(goodNewsInLast10Sec);
-        log.setUnique3TitlesInLast10Sec(unique3TitlesInLast10Sec);
+        log.setCountGoodNewsInLast10Sec(goodNewsInLast10Sec);
+        log.setTitleOf3UniqueNewsInLast10Sec(unique3TitlesInLast10Sec);
 
         System.err.println(log.toString());
         return log;
+    }
+
+    @Autowired
+    @Scheduled(fixedRate = 10000)
+    public LoggingModel LoggingToConsole(){
+
+        return getAnalyzeResultLog();
+
     }
 
 }
