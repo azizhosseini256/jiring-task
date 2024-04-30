@@ -24,7 +24,7 @@ public class MockNewsGeneratorService {
 
     }
 
-    //Random int in range 0~9 with more chance for upper numbers.
+    //Random int in range 0~9 with more chance for lower numbers.
     //If number was in second half of the range, shade it sometimes!
     private int randomPriorityGenerator() {
         int randomNumber = random.nextInt(10);
